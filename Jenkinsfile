@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        // maven 'MAVEN_HOME'
         maven 'MAVEN_HOME' // Make sure this matches your Jenkins global tool config
     }
 
@@ -14,6 +15,7 @@ pipeline {
 
         stage('Maven Build') {
             steps {
+                bat 'mvn install'
                 bat 'mvn clean install' // Includes test by default
             }
         }
@@ -32,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Build Success') {
+        stage('Build Successs') {
             steps {
                 echo "Build Successful"
             }
@@ -40,27 +42,35 @@ pipeline {
     }
 }
 
-
 // pipeline {
 //     agent any
-//     tools {
-//         maven 'MAVEN_HOME'
-//     }
+//
 //     stages {
-//         stage('Welcome Stage') {
+//
+//         stage('Build') {
 //             steps {
-//                 echo "Welcome to Pipeline"
+//                 echo "Building Maven Project"
+//                 sh 'mvn clean package'
 //             }
 //         }
-//         stage('Maven Build') {
+//
+//         stage('Deploy to Dev') {
+//             when {
+//                 branch 'b1'
+//             }
 //             steps {
-//                 bat 'mvn install'
+//                 echo "Deploying to Dev Environment"
 //             }
 //         }
-//         stage('Build Success') {
+//
+//         stage('Deploy to Production') {
+//             when {
+//                 branch 'master'
+//             }
 //             steps {
-//                 echo "Build Successful"
+//                 echo "Deploying to Production Environment"
 //             }
 //         }
+//
 //     }
 // }
